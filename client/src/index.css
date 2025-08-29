@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(120, 20%, 98%);
+  --foreground: hsl(120, 10%, 15%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(120, 10%, 15%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(120, 10%, 15%);
+  --primary: hsl(142, 76%, 36%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(45, 93%, 47%);
+  --secondary-foreground: hsl(45, 10%, 15%);
+  --muted: hsl(120, 30%, 95%);
+  --muted-foreground: hsl(120, 10%, 45%);
+  --accent: hsl(45, 76%, 60%);
+  --accent-foreground: hsl(45, 10%, 15%);
+  --destructive: hsl(356, 90%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(120, 20%, 90%);
+  --input: hsl(120, 20%, 95%);
+  --ring: hsl(142, 76%, 36%);
+  --chart-1: hsl(142, 76%, 36%);
+  --chart-2: hsl(45, 93%, 47%);
+  --chart-3: hsl(200, 100%, 50%);
+  --chart-4: hsl(280, 100%, 50%);
+  --chart-5: hsl(340, 100%, 50%);
+  --sidebar: hsl(180, 6.67%, 97.06%);
+  --sidebar-foreground: hsl(120, 10%, 15%);
+  --sidebar-primary: hsl(142, 76%, 36%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(45, 76%, 60%);
+  --sidebar-accent-foreground: hsl(45, 10%, 15%);
+  --sidebar-border: hsl(120, 20%, 90%);
+  --sidebar-ring: hsl(142, 76%, 36%);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'Fira Code', monospace;
+  --radius: 0.75rem;
+  --agroBagual-green: hsl(142, 76%, 36%);
+  --agroBagual-gold: hsl(45, 93%, 47%);
+  --agroBagual-green-light: hsl(142, 60%, 50%);
+  --agroBagual-gold-light: hsl(45, 80%, 60%);
+}
+
+.dark {
+  --background: hsl(120, 10%, 8%);
+  --foreground: hsl(120, 10%, 90%);
+  --card: hsl(120, 10%, 12%);
+  --card-foreground: hsl(120, 10%, 90%);
+  --popover: hsl(120, 10%, 12%);
+  --popover-foreground: hsl(120, 10%, 90%);
+  --primary: hsl(142, 76%, 36%);
+  --primary-foreground: hsl(0, 0%, 98%);
+  --secondary: hsl(45, 93%, 47%);
+  --secondary-foreground: hsl(45, 10%, 15%);
+  --muted: hsl(120, 10%, 15%);
+  --muted-foreground: hsl(120, 10%, 60%);
+  --accent: hsl(45, 76%, 60%);
+  --accent-foreground: hsl(45, 10%, 15%);
+  --destructive: hsl(356, 90%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(120, 10%, 20%);
+  --input: hsl(120, 10%, 15%);
+  --ring: hsl(142, 76%, 36%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom glass effect for premium look */
+.glass-effect {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, var(--agroBagual-green), var(--agroBagual-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium gradient background */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--agroBagual-green), var(--agroBagual-gold));
+}
+
+/* Tab bar styling */
+.tab-bar-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background-color: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Weather card styling */
+.weather-card {
+  background: linear-gradient(135deg, var(--agroBagual-green-light), var(--agroBagual-green));
+  color: white;
+}
+
+/* Premium button effects */
+.premium-button {
+  background: linear-gradient(135deg, var(--agroBagual-green), var(--agroBagual-gold));
+  transition: all 0.3s ease;
+  transform: translateY(0);
+}
+
+.premium-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* SemeIA chat styling */
+.chat-container {
+  max-height: calc(100vh - 200px);
+}
+
+.ai-message {
+  background-color: var(--muted);
+  border-radius: 1rem;
+  padding: 0.75rem;
+}
+
+.user-message {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 1rem;
+  padding: 0.75rem;
+  margin-left: auto;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+/* Market card hover effects */
+.market-card {
+  transition: all 0.3s ease;
+}
+
+.market-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Input focus effects */
+.premium-input {
+  transition: all 0.2s ease;
+}
+
+.premium-input:focus {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
