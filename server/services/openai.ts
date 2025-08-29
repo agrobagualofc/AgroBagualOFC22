@@ -8,7 +8,7 @@ const openai = new OpenAI({
 export async function chatWithAI(message: string): Promise<string> {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025
+      model: "gpt-4o-mini", // modelo econômico e eficiente
       messages: [
         {
           role: "system",
@@ -41,7 +41,7 @@ export async function chatWithAI(message: string): Promise<string> {
 export async function analyzeImageWithAI(base64Image: string): Promise<string> {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025
+      model: "gpt-4o-mini", // modelo econômico e eficiente
       messages: [
         {
           role: "system",

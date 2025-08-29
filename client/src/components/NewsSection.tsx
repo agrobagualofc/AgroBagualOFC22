@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Clock, ExternalLink } from "lucide-react";
+import NewsModal from "@/components/modals/NewsModal";
 
 interface NewsItem {
   id: string;
@@ -14,9 +16,17 @@ interface NewsItem {
 }
 
 export default function NewsSection() {
+  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  
   const { data: news = [], isLoading } = useQuery<NewsItem[]>({
     queryKey: ["/api/news"],
   });
+
+  const handleNewsClick = (article: NewsItem) => {
+    setSelectedNews(article);
+    setShowModal(true);
+  };
 
   const formatPublishTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -37,6 +47,7 @@ export default function NewsSection() {
   };
 
   return (
+    <>
     <Card className="bg-white" data-testid="news-section">
       <CardHeader className="pb-3">
         <CardTitle className="text-xl font-semibold text-card-foreground" data-testid="news-title">
@@ -63,6 +74,7 @@ export default function NewsSection() {
               <div 
                 key={article.id} 
                 className="flex space-x-3 p-2 rounded-lg hover:bg-muted transition-colors cursor-pointer"
+                onClick={() => handleNewsClick(article)}
                 data-testid={`news-item-${article.id}`}
               >
                 <img 
@@ -88,6 +100,10 @@ export default function NewsSection() {
                     variant="ghost" 
                     size="sm" 
                     className="text-primary text-xs font-medium mt-1 p-0 h-auto"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNewsClick(article);
+                    }}
                     data-testid={`button-read-more-${article.id}`}
                   >
                     <ExternalLink className="w-3 h-3 mr-1" />
@@ -100,5 +116,14 @@ export default function NewsSection() {
         </div>
       </CardContent>
     </Card>
+    
+    {selectedNews && (
+      <NewsModal 
+        open={showModal}
+        onOpenChange={setShowModal}
+        news={selectedNews}
+      />
+    )}
+  </>
   );
 }

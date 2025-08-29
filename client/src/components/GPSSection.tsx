@@ -14,10 +14,12 @@ import {
   Tractor
 } from "lucide-react";
 import CalculatorModal from "@/components/modals/CalculatorModal";
+import CreateRouteModal from "@/components/modals/CreateRouteModal";
 import { GpsRoute } from "@shared/schema";
 
 export default function GPSSection() {
   const [showCalculator, setShowCalculator] = useState(false);
+  const [showCreateRoute, setShowCreateRoute] = useState(false);
 
   const { data: routes = [], isLoading } = useQuery<GpsRoute[]>({
     queryKey: ["/api/gps/routes"],
@@ -64,6 +66,7 @@ export default function GPSSection() {
             {/* GPS Controls */}
             <div className="grid grid-cols-2 gap-3 mb-6" data-testid="gps-controls">
               <Button 
+                onClick={() => setShowCreateRoute(true)}
                 className="bg-primary text-primary-foreground p-4 h-auto flex flex-col items-center space-y-1"
                 data-testid="button-create-route"
               >
@@ -155,6 +158,11 @@ export default function GPSSection() {
       <CalculatorModal 
         open={showCalculator} 
         onOpenChange={setShowCalculator}
+      />
+      
+      <CreateRouteModal
+        open={showCreateRoute}
+        onOpenChange={setShowCreateRoute}
       />
     </>
   );

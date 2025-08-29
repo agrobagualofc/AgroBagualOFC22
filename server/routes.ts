@@ -136,12 +136,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/reminders", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("Creating reminder with data:", { ...req.body, userId });
       const reminderData = insertReminderSchema.parse({ ...req.body, userId });
+      console.log("Parsed reminder data:", reminderData);
       const reminder = await storage.createReminder(reminderData);
+      console.log("Created reminder:", reminder);
       res.json(reminder);
     } catch (error) {
       console.error("Error creating reminder:", error);
-      res.status(400).json({ message: "Failed to create reminder" });
+      res.status(400).json({ message: "Failed to create reminder", error: (error as Error).message });
     }
   });
 
@@ -160,12 +163,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/notes", isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
+      console.log("Creating note with data:", { ...req.body, userId });
       const noteData = insertNoteSchema.parse({ ...req.body, userId });
+      console.log("Parsed note data:", noteData);
       const note = await storage.createNote(noteData);
+      console.log("Created note:", note);
       res.json(note);
     } catch (error) {
       console.error("Error creating note:", error);
-      res.status(400).json({ message: "Failed to create note" });
+      res.status(400).json({ message: "Failed to create note", error: (error as Error).message });
     }
   });
 

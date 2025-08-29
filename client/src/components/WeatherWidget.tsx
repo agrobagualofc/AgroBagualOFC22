@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MapPin, Wind, Droplets, MoreHorizontal } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import LocationModal from "@/components/modals/LocationModal";
 
 interface WeatherData {
   location: string;
@@ -22,8 +24,11 @@ interface WeatherData {
 }
 
 export default function WeatherWidget() {
+  const [currentLocation, setCurrentLocation] = useState("Erechim");
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  
   const { data: weather, isLoading, error } = useQuery<WeatherData>({
-    queryKey: ["/api/weather/Erechim"],
+    queryKey: ["/api/weather", currentLocation],
   });
 
   if (isLoading) {
@@ -59,6 +64,7 @@ export default function WeatherWidget() {
   };
 
   return (
+    <>
     <Card className="weather-card border-0 text-white" data-testid="weather-widget">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
@@ -66,6 +72,7 @@ export default function WeatherWidget() {
             Previsão do Tempo
           </CardTitle>
           <Button 
+            onClick={() => setShowLocationModal(true)}
             variant="ghost" 
             size="sm" 
             className="text-white hover:bg-white hover:bg-opacity-20"
@@ -138,5 +145,13 @@ export default function WeatherWidget() {
         )}
       </CardContent>
     </Card>
+    
+    <LocationModal
+      open={showLocationModal}
+      onOpenChange={setShowLocationModal}
+      currentLocation={currentLocation}
+      onLocationChange={setCurrentLocation}
+    />
+  </>
   );
 }
